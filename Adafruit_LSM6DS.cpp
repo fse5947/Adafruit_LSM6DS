@@ -116,12 +116,13 @@ uint8_t Adafruit_LSM6DS::status(void) {
  *            The user-defined ID to differentiate different sensors
  *    @return True if initialization was successful, otherwise false.
  */
-boolean Adafruit_LSM6DS::begin_I2C(uint8_t i2c_address, TwoWire *wire,
+bool Adafruit_LSM6DS::begin_I2C(uint8_t i2c_address, TwoWire *wire,
                                    int32_t sensor_id) {
-  delete i2c_dev; // remove old interface
+                             
+  if (i2c_dev)
+    delete i2c_dev;
 
   i2c_dev = new Adafruit_I2CDevice(i2c_address, wire);
-
   if (!i2c_dev->begin()) {
     return false;
   }
